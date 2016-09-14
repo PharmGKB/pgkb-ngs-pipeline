@@ -2,7 +2,7 @@
 
 ##  PharmGKB NGS Pipeline
 
-This repository contains a simplified version of our work-in-progress grc38 NGS pipeline for pharmacogenomics - PGxtract.  run.sh is a simple bash script to show the steps of our pipeline and the parameters used. It has been tested on Ubuntu.  It takes a pair of fastq files from an Illumina NGS run, aligns them using BWA, and then calls variants using GATK.  The final vcf is genotyped at *every* position in the file, which is useful for pharmacogenomics analysis but produce large files.  A smaller vcf containing only the positions needed for [PharmCAT](https://github.com/PharmGKB/PharmCAT) is also produced. This pipeline is optimized for WGS and Exome analysis, and currently does not handle trios.  [VQSR](http://gatkforums.broadinstitute.org/gatk/discussion/39/variant-quality-score-recalibration-vqsr) filtering has shown to be effective for WGS data, but if you may want to switch to [hard filtering](http://gatkforums.broadinstitute.org/wdl/discussion/2806/howto-apply-hard-filters-to-a-call-set) if using other data sources. 
+This repository contains a simplified version of our work-in-progress grc38 NGS pipeline for pharmacogenomics - PGxtract.  run.sh is a simple bash script to show the steps of our pipeline and the parameters used. It has been tested on Ubuntu, takes about 5 days for 30x WGS data, and requires roughly 200GB of space.  It takes a pair of fastq files from an Illumina NGS run, aligns them using BWA, and then calls variants using GATK.  The final vcf is genotyped at *every* position in the file, which is useful for pharmacogenomics analysis but produces large files.  A smaller vcf containing only the positions needed for [PharmCAT](https://github.com/PharmGKB/PharmCAT) is also produced. This pipeline is optimized for WGS and Exome analysis, and currently does not handle trios.  [VQSR](http://gatkforums.broadinstitute.org/gatk/discussion/39/variant-quality-score-recalibration-vqsr) filtering has shown to be effective for WGS data, but if you may want to switch to [hard filtering](http://gatkforums.broadinstitute.org/wdl/discussion/2806/howto-apply-hard-filters-to-a-call-set) if using other data sources. 
 
 ## Installation
 
@@ -55,7 +55,7 @@ The following commands can be used to download some test files and check in the 
 
 ## TODO
 
-This is a work in progress to share the early version of our protocol.  Later versions will be optimized for pipeline operation. Please feel free to take the steps in run.sh and adapt them.
+This is an experimental work in progress version of this pipeline, made available only to share and refine the procedure with collaborators.  Later versions will be optimized for parallel operation. Please feel free to take the steps in run.sh and adapt them.
 
 
 
