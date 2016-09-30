@@ -2,7 +2,7 @@
 
 ##  PharmGKB NGS Pipeline
 
-This repository contains a simplified version of our work-in-progress grc38 NGS pipeline for pharmacogenomics - PGxtract.  run.sh is a simple bash script to show the steps of our pipeline and the parameters used. It has been tested on Ubuntu, takes about 5 days for 30x WGS data, and requires roughly 200GB of space.  It takes a pair of fastq files from an Illumina NGS run, aligns them using BWA, and then calls variants using GATK.  The final vcf is genotyped at *every* position in the file, which is useful for pharmacogenomics analysis but produces large files.  A smaller vcf containing only the positions needed for [PharmCAT](https://github.com/PharmGKB/PharmCAT) is also produced. This pipeline is optimized for WGS and Exome analysis, and currently does not handle trios.  [VQSR](http://gatkforums.broadinstitute.org/gatk/discussion/39/variant-quality-score-recalibration-vqsr) filtering has shown to be effective for WGS data, but if you may want to switch to [hard filtering](http://gatkforums.broadinstitute.org/wdl/discussion/2806/howto-apply-hard-filters-to-a-call-set) if using other data sources. 
+This repository contains a simplified version of our work-in-progress grc38 NGS pipeline for pharmacogenomics - PGxtract.  run.sh is a simple bash script to show the steps of our pipeline and the parameters used. It has been tested on Ubuntu, takes about 5 days for 30x WGS data, and requires roughly 200GB of space.  It takes a pair of fastq files from an Illumina NGS run, aligns them using BWA, and then calls variants using GATK.  The final vcf is genotyped at *every* position in the file, which is useful for pharmacogenomics analysis but produces large files.  A smaller vcf containing only the positions needed for [PharmCAT](https://github.com/PharmGKB/PharmCAT) is also produced. This pipeline is optimized for WGS and Exome analysis, and currently does not handle trios.  [VQSR](http://gatkforums.broadinstitute.org/gatk/discussion/39/variant-quality-score-recalibration-vqsr) filtering has shown to be effective for WGS data, but if you may want to switch to [hard filtering](http://gatkforums.broadinstitute.org/wdl/discussion/2806/howto-apply-hard-filters-to-a-call-set) if using other data sources. There is also a dockerized version of this pipeline described below.
 
 ## Installation
 
@@ -53,9 +53,21 @@ The following commands can be used to download some test files and check in the 
      ./run.sh test/fasta1.gz test/fasta2.gz "@RG\tID:fasta1.gz\tPL:ILLUMINA\tSM:1" test run1
      
 
-## TODO
+## Docker version
 
-This is an experimental work in progress version of this pipeline, made available only to share and refine the procedure with collaborators.  Later versions will be optimized for parallel operation. Please feel free to take the steps in run.sh and adapt them.
+The pipeline can also be installed using this docker [file](DockerFile).  To run this version check out the project and cd into the main directory then create the docker image:
+
+   `docker build -t pharmngs .`
+    
+Then create container using this image, which a shared volume for the data:
+    
+   `docker run -t -v /data/<folder_with_ngs_data>:/usr/share/docker_data pharmngs /bin/bash`
+    
+
+This gives you command line access to the container.  If you would like to try running the test data type:
+
+   `nohup ./run.sh test/fasta1.gz test/fasta2.gz "@RG\tID:fasta1.gz\tPL:ILLUMINA\tSM:1" test/ test1 > log.txt &`
+
 
 
 
