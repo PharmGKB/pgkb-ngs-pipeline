@@ -9,7 +9,7 @@ The pipeline takes FASTQ files, aligns them using BWA, and then calls variants u
 
 It is optimized for WGS and Exome analysis, and currently does not handle trios.  [VQSR](http://gatkforums.broadinstitute.org/gatk/discussion/39/variant-quality-score-recalibration-vqsr) filtering has shown to be effective for WGS data, but you may want to switch to [hard filtering](http://gatkforums.broadinstitute.org/wdl/discussion/2806/howto-apply-hard-filters-to-a-call-set) if using other data sources.
 
-Take a look at `run.sh` to see the steps of our pipeline and the parameters used.  It takes a pair of fastq files from an Illumina NGS run and outputs a complete VCF file containing genotypes for *every* position, useful for pharmacogenomics analysis and a smaller VCF containing only the positions needed for [PharmCAT](https://github.com/PharmGKB/PharmCAT).
+Take a look at `run.sh` to see the steps of our pipeline and the parameters used.  It takes a pair of FASTQ files from an Illumina NGS run and outputs a complete VCF file containing genotypes for *every* position, useful for pharmacogenomics analysis and a smaller VCF containing only the positions needed for [PharmCAT](https://github.com/PharmGKB/PharmCAT).
 
 
 ## Setting Up
@@ -49,6 +49,17 @@ You will need to also need to index the genome for BWA. The following commands s
 > tar -zxvf external_data/grc38.tar.gz -C external_data/
 ```
 
+### Testing the Pipeline
+
+The following commands can be used to download some test files and check if the pipeline is working:
+
+```
+> mkdir test
+> curl -o test/fasta1.gz ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/NA12878/Garvan_NA12878_HG001_HiSeq_Exome/NIST7035_TAAGGCGA_L001_R1_001.fastq.gz
+> curl -o test/fasta2.gz ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/NA12878/Garvan_NA12878_HG001_HiSeq_Exome/NIST7035_TAAGGCGA_L001_R2_001.fastq.gz
+> ./run.sh test/fasta1.gz test/fasta2.gz "@RG\tID:fasta1.gz\tPL:ILLUMINA\tSM:1" test run1
+```
+
 
 ## Running
 
@@ -62,17 +73,6 @@ Where the _fasta1.q_ and _fasta2.q_ are pair reads from Illumia sequencing, _RG_
 
 This script has been tested on Ubuntu, takes about 5 days for 30x WGS data, and requires roughly 200GB of space. 
 
-
-## Test installation
-
-The following commands can be used to download some test files and check in the pipeline is running:
-
-```
-> mkdir test
-> curl -o test/fasta1.gz ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/NA12878/Garvan_NA12878_HG001_HiSeq_Exome/NIST7035_TAAGGCGA_L001_R1_001.fastq.gz
-> curl -o test/fasta2.gz ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/NA12878/Garvan_NA12878_HG001_HiSeq_Exome/NIST7035_TAAGGCGA_L001_R2_001.fastq.gz
-> ./run.sh test/fasta1.gz test/fasta2.gz "@RG\tID:fasta1.gz\tPL:ILLUMINA\tSM:1" test run1
-```
 
 ## Docker version
 
