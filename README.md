@@ -1,6 +1,6 @@
 #  PharmGKB NGS Pipeline
 
-This repository contains a simplified version of our work-in-progress grc38 NGS pipeline for pharmacogenomics.  The primary goal of this pipeline is to generate VCF data suitable for use by [PharmCat](https://github.com/PharmGKB/PharmCAT).
+This repository contains a simplified version of our work-in-progress GRCh38 NGS pipeline for pharmacogenomics.  The primary goal of this pipeline is to generate VCF data suitable for use by [PharmCAT](https://github.com/PharmGKB/PharmCAT).
 
 
 ## Quick Overview
@@ -30,14 +30,14 @@ pipeline:
     '-- gatk-3.5-0
 ````    
 
-In `/ext_data`:
+For `/ext_data`:
 
 * uncompress the __GATK hg38 bundle__ from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/hg38/hg38bundle.tar.gz
 
-In `/ext_data/genome`:
+For `/ext_data/genome`:
 
-* uncompress the __grch38 (no-alt) FASTA data__ from ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
-* download __grch38 (no alt) FASTA index__ from ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.fai
+* uncompress the __GRCh38 (no-alt) FASTA data__ from ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
+* download __GRCh38 (no alt) FASTA index__ from ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.fai
 
 You will need to also need to index the genome for BWA. The following commands should automate the download and indexing:
 
