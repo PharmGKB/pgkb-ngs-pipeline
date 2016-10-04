@@ -69,7 +69,12 @@ The pipeline can be run using the following command:
 > ./run.sh fasta1.q fasta2.q @RG\tID:fasta1.gz\tPL:ILLUMINA\tSM:1 working_dir output_prefix
 ```
 
-Where the _fasta1.q_ and _fasta2.q_ are pair reads from Illumia sequencing, _RG_ is the read group header in the format `@RG\tID:fasta1.gz\tPL:ILLUMINA\tSM:1`, _working_dir_ is the directory where the input fastaq files are and where the output will be put, and _output-prefix_ will be added to beginning of each of the output files.
+Where:
+
+* _fasta1.q_ and _fasta2.q_ are pair reads from Illumina sequencing,
+* _RG_ is the read group header in the format `@RG\tID:fasta1.gz\tPL:ILLUMINA\tSM:1`,
+* _working_dir_ is the directory where the input FASTQ files are and where the output will be put,
+* and _output-prefix_ will be added to beginning of each of the output files.
 
 This script has been tested on Ubuntu, takes about 5 days for 30x WGS data, and requires roughly 200GB of space. 
 
