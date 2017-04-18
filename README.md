@@ -9,7 +9,7 @@ The pipeline takes FASTQ files, aligns them using BWA, and then calls variants u
 
 It is optimized for WGS and Exome analysis, and currently does not handle trios.  [VQSR](http://gatkforums.broadinstitute.org/gatk/discussion/39/variant-quality-score-recalibration-vqsr) filtering has shown to be effective for WGS data, but you may want to switch to [hard filtering](http://gatkforums.broadinstitute.org/wdl/discussion/2806/howto-apply-hard-filters-to-a-call-set) if using other data sources.
 
-Take a look at `run.sh` to see the steps of our pipeline and the parameters used.  It takes a pair of FASTQ files from an Illumina NGS run and outputs a complete VCF file containing genotypes for *every* position, useful for pharmacogenomics analysis and a smaller VCF containing only the positions needed for [PharmCAT](https://github.com/PharmGKB/PharmCAT).
+Take a look at `run.sh` to see the steps of our pipeline and the parameters used.  The input is a pair of FASTQ files from an Illumina NGS run and the output is a complete VCF file containing genotypes for *every* position, which is useful for pharmacogenomics analysis and [PharmCAT](https://github.com/PharmGKB/PharmCAT).
 
 
 ## Setting Up
@@ -42,8 +42,8 @@ For `/ext_data/genome`:
 You will need to also need to index the genome for BWA. The following commands should automate the download and indexing:
 
 ```
-> curl -o external_data/genome/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.fai ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.fai
-> curl -o external_data/genome/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
+> curl -o external_data/genome/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.fai ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.fai
+> curl -o external_data/genome/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
 > bwa index external_data/genome/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
 > curl -o external_data/grc38.tar.gz ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/hg38/hg38bundle.tar.gz
 > tar -zxvf external_data/grc38.tar.gz -C external_data/
@@ -51,7 +51,7 @@ You will need to also need to index the genome for BWA. The following commands s
 
 ### Testing the Pipeline
 
-The following commands can be used to download some test files and check if the pipeline is working:
+The following commands can be used to download some test files to check if the pipeline is working:
 
 ```
 > mkdir test
@@ -81,16 +81,16 @@ This script has been tested on Ubuntu, takes about 5 days for 30x WGS data, and 
 
 ## Docker version
 
-The pipeline can also be installed using this docker [file](DockerFile).  To run this version check out the project and cd into the main directory then create the docker image:
+The pipeline can also be installed using this docker [file](../DockerFile).  To run this version check out the project and cd into the main directory then create the docker image:
 
 ```
 > docker build -t pharmngs .
 ```
     
-Then create container using this image, which a shared volume for the data:
+Then create a container using this image, with a shared volume for the data:
 
 ```
-> docker run -t -v /data/<folder_with_ngs_data>:/usr/share/docker_data pharmngs /bin/bash
+> docker run -t -v <folder_with_ngs_data>:/usr/share/docker_data pharmngs /bin/bash
 ```
  
 This gives you command line access to the container.  If you would like to try running the test data type:

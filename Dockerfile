@@ -10,11 +10,13 @@ RUN apt-get -y install zlib1g-dev vim python-software-properties apt-file softwa
 # Install bioconda packages
 RUN conda config --add channels r
 RUN conda config --add channels bioconda
-RUN conda install -y picard
+RUN conda install -y -c bioconda picard=2.9.0
 RUN conda install -y -c r r-essentials
 
 # install gatk
-RUN conda install -y gatk
+RUN conda install -y gatk=3.5
+RUN echo "YOU will need to download gatk3.6 from here and put it in the same directory as this Dockerfile: https://software.broadinstitute.org/gatk/download/ \
+NOTE - this pipeline has only been tested with version 3.5.  later versions can be used at your own risk, though you will need to edit the line above."
 ADD GenomeAnalysisTK.jar GenomeAnalysisTK.jar
 RUN gatk-register GenomeAnalysisTK.jar
 
@@ -25,8 +27,8 @@ ENV PATH /bwa.kit/:$PATH
 # get BWA genome and prepare sequence
 RUN mkdir external_data \
 && mkdir external_data/genome \
-&& curl -o external_data/genome/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.fai ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.fai \
-&& curl -o external_data/genome/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz \
+&& curl -o external_data/genome/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.fai ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.fai \
+&& curl -o external_data/genome/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz \
 && gunzip -c external_data/genome/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz  > external_data/genome/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna \
 && bwa index external_data/genome/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna
 
