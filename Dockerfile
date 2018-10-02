@@ -5,7 +5,7 @@ MAINTAINER "Lester Carter" lester@pharmgkb.org
 
 # update
 RUN apt-get -y update
-RUN apt-get -y install zlib1g-dev vim python-software-properties apt-file software-properties-common build-essential curl git python-setuptools ruby
+RUN apt-get -y install zlib1g-dev vim apt-file software-properties-common build-essential curl git python-setuptools ruby
 
 # Install bioconda packages
 RUN conda config --add channels r
